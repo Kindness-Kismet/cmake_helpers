@@ -107,7 +107,7 @@ PRIVATE
 )
 
 target_include_directories(external_microtex_bundled
-INTERFACE
+SYSTEM INTERFACE
     ${microtex_src}
 )
 
