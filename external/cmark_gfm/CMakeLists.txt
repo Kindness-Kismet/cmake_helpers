@@ -97,10 +97,33 @@ block()
     endif()
 endblock()
 
+add_library(external_cmark_gfm_warnings_off INTERFACE)
+if (MSVC)
+    target_compile_options(external_cmark_gfm_warnings_off
+    INTERFACE
+        /W0
+        /WX-
+    )
+else()
+    target_compile_options(external_cmark_gfm_warnings_off
+    INTERFACE
+        -w
+        -Wno-error
+    )
+endif()
+
 target_link_libraries(external_cmark_gfm
 INTERFACE
     libcmark-gfm-extensions_static
     libcmark-gfm_static
+)
+target_link_libraries(libcmark-gfm-extensions_static
+PRIVATE
+    external_cmark_gfm_warnings_off
+)
+target_link_libraries(libcmark-gfm_static
+PRIVATE
+    external_cmark_gfm_warnings_off
 )
 
 # Group cmark-gfm's targets under (external) in the IDE's solution view.

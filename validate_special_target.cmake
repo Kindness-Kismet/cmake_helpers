@@ -8,7 +8,12 @@ include(CMakeDependentOption)
 
 set(DESKTOP_APP_SPECIAL_TARGET "" CACHE STRING "Use special platform target, like 'macstore' for Mac App Store.")
 
-get_filename_component(libs_loc "../Libraries" REALPATH)
+# DESKTOP_APP_LIBS_LOC override
+if (DESKTOP_APP_LIBS_LOC)
+    get_filename_component(libs_loc "${DESKTOP_APP_LIBS_LOC}" REALPATH)
+else()
+    get_filename_component(libs_loc "../Libraries" REALPATH)
+endif()
 set(libs_loc_exists 0)
 if (EXISTS ${libs_loc})
     set(libs_loc_exists 1)
